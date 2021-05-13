@@ -13,8 +13,8 @@
 #include <string.h>
 
 typedef struct country_list{
-char name[30];
-char acronymn[4];
+char country[30];
+char country_code[4];
 char continent[15];
 long population;
 struct week_list *week_pointer;
@@ -22,8 +22,8 @@ struct country_list *next;
 }country_list;
 
 typedef struct week_list{
-long InfectedWeekly, DeathWeekly, InfectedTotal, DeathTotal; 
-double InfectedRatio, DeathRatio; 
+long Infected_Weekly_count, Death_Weekly_count, Infected_cumulative_count, Death_cumulative_count; 
+double Infected_rate_14_day, Death_rate_14_day; 
 struct week_list *next;
 }week_list;
 
