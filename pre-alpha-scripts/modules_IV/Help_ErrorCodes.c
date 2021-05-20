@@ -3,7 +3,7 @@
 |                        |                                                                             |
 |                        |                                                                             |
 +------------------------------------------------------------------------------------------------------+
-| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) nº99968, Henrique "Delfas" Delfino            |
+| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) nÂº99968, Henrique "Delfas" Delfino            |
 | Date: 19 May 2021                                                                                    |
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
