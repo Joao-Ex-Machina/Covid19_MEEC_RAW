@@ -1,0 +1,37 @@
+#compiler
+CC = gcc
+#compile flags
+CFLAGS  = -Wall -std=c11 -O3
+#.out name
+default: covid19
+
+covid19:  main.o readmodule.o writemodule.o restrictionmodule.o selectionmodule.o sortingmodule.o Help_ErrorCodes.o Freemodules.o
+    $(CC) $(CFLAGS) -o covid19 main.o readmodule.o writemodule.o restrictionmodule.o selectionmodule.o sortingmodule.o Help_ErrorCodes.o Freemodules.o
+
+main.o:  main.c covid19.h
+    $(CC) $(CFLAGS) -c main.c
+
+readmodule.o: readmodule.c covid19.h
+    $(CC) $(CFLAGS) -c readmodule.c
+
+writemodule.o: writemodule.c covid19.h
+    $(CC) $(CFLAGS) -c writemodule.c
+
+restrictionmodule.o: restrictionmodule.c covid19.h
+    $(CC) $(CFLAGS) -c restrictionmodule.c
+
+selectionmodule.o: selectionmodule.c covid19.h
+    $(CC) $(CFLAGS) -c selectionmodule.c
+
+sortingmodule.o: sortingmodule.c covid19.h
+    $(CC) $(CFLAGS) -c sortingmodule.c
+
+Help_ErrorCodes.o: Help_ErrorCodes.c covid19.h
+    $(CC) $(CFLAGS) -c Help_ErrorCodes.c
+
+Freemodules.o: Freemodules.c covid19.h
+    $(CC) $(CFLAGS) -c Help_ErrorCodes.c
+
+#remove object files from directory
+clean:
+    $(RM) count *.o *~
