@@ -1,0 +1,57 @@
+==28345== Memcheck, a memory error detector
+==28345== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==28345== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==28345== Command: ./covid19 -i covid19_w_tf01.csv -o benis.csv
+==28345== Parent PID: 27949
+==28345== 
+==28345== Invalid read of size 8
+==28345==    at 0x403DA3: free_list (Freemodules.c:35)
+==28345==    by 0x400FFD: main (main.c:127)
+==28345==  Address 0x5205308 is 72 bytes inside a block of size 80 free'd
+==28345==    at 0x4C2AF9D: free (vg_replace_malloc.c:540)
+==28345==    by 0x400FF5: main (main.c:126)
+==28345==  Block was alloc'd at
+==28345==    at 0x4C29EA3: malloc (vg_replace_malloc.c:309)
+==28345==    by 0x401DFB: create_new_country (readmodulec.c:38)
+==28345==    by 0x401DFB: readfile (readmodulec.c:232)
+==28345==    by 0x4010F0: main (main.c:107)
+==28345== 
+==28345== Invalid free() / delete / delete[] / realloc()
+==28345==    at 0x4C2AF9D: free (vg_replace_malloc.c:540)
+==28345==    by 0x403DB6: free_list (Freemodules.c:37)
+==28345==    by 0x400FFD: main (main.c:127)
+==28345==  Address 0x52052c0 is 0 bytes inside a block of size 80 free'd
+==28345==    at 0x4C2AF9D: free (vg_replace_malloc.c:540)
+==28345==    by 0x400FF5: main (main.c:126)
+==28345==  Block was alloc'd at
+==28345==    at 0x4C29EA3: malloc (vg_replace_malloc.c:309)
+==28345==    by 0x401DFB: create_new_country (readmodulec.c:38)
+==28345==    by 0x401DFB: readfile (readmodulec.c:232)
+==28345==    by 0x4010F0: main (main.c:107)
+==28345== 
+==28345== 
+==28345== HEAP SUMMARY:
+==28345==     in use at exit: 42,768 bytes in 594 blocks
+==28345==   total heap usage: 663 allocs, 79 frees, 48,808 bytes allocated
+==28345== 
+==28345== 42,120 bytes in 585 blocks are indirectly lost in loss record 1 of 2
+==28345==    at 0x4C29EA3: malloc (vg_replace_malloc.c:309)
+==28345==    by 0x401CB6: create_new_week (readmodulec.c:89)
+==28345==    by 0x401CB6: readfile (readmodulec.c:283)
+==28345==    by 0x4010F0: main (main.c:107)
+==28345== 
+==28345== 42,768 (648 direct, 42,120 indirect) bytes in 9 blocks are definitely lost in loss record 2 of 2
+==28345==    at 0x4C29EA3: malloc (vg_replace_malloc.c:309)
+==28345==    by 0x401BD0: create_new_week (readmodulec.c:89)
+==28345==    by 0x401BD0: readfile (readmodulec.c:302)
+==28345==    by 0x4010F0: main (main.c:107)
+==28345== 
+==28345== LEAK SUMMARY:
+==28345==    definitely lost: 648 bytes in 9 blocks
+==28345==    indirectly lost: 42,120 bytes in 585 blocks
+==28345==      possibly lost: 0 bytes in 0 blocks
+==28345==    still reachable: 0 bytes in 0 blocks
+==28345==         suppressed: 0 bytes in 0 blocks
+==28345== 
+==28345== For counts of detected and suppressed errors, rerun with: -v
+==28345== ERROR SUMMARY: 21 errors from 3 contexts (suppressed: 0 from 0)
