@@ -101,7 +101,7 @@ void string_validity(char country[30],char country_code[4],char continent[15]){
 
 }
 void Dargument_validity(char*selectiondatapointer){
-    if(strcmp(selectiondatapointer,"inf")!=0 ||strcmp(selectiondatapointer,"dea")!=0 || strcmp(selectiondatapointer,"racioinf")!=0 || strcmp(selectiondatapointer,"raciodea")!=0)
+    if(strcmp(selectiondatapointer,"inf")!=0 && strcmp(selectiondatapointer,"dea")!=0 && strcmp(selectiondatapointer,"racioinf")!=0 && strcmp(selectiondatapointer,"raciodea")!=0)
         help(Argument_Error,Unknown_Argument);
 }
 
