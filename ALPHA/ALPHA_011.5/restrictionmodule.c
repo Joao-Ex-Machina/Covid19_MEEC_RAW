@@ -3,7 +3,7 @@
 |                        |All free memory related functions can be found here.                         |
 |                        |                                                                             |
 +------------------------------------------------------------------------------------------------------+
-| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) nบ99968, Henrique "Delfas" Delfino            |
+| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) nยบ99968, Henrique "Delfas" Delfino            |
 | Date: 09 May 2021                                                                                    |
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
@@ -26,7 +26,6 @@ country_list *restricting(country_list *heade, char *string)
     // verify if the string on the command line was min n,
     if (variaveis_lidas == 1)
     {
-        //printf ("min %ld ",min_valor);
         min_valor = min_valor*1000;
         //while the population of the header is smaller than n*1000 the country will be deleted
         while(heade->population <= min_valor)
@@ -55,7 +54,6 @@ country_list *restricting(country_list *heade, char *string)
         //if the last country got a population <= than n*1000 the country will be deleted
         if (aux->population <= min_valor)
         {
-            //printf("estou a apagar %s\n", aux->country);
             free_node(aux);
         }
 
@@ -66,14 +64,12 @@ country_list *restricting(country_list *heade, char *string)
     //in case if the flag is "max n"
     if (variaveis_lidas == 1)
     {
-        //printf ("max %ld ",max_valor);
         max_valor = max_valor*1000;
            //while the population of the header is bigger than n*1000 the country will be deleted
         while(heade->population >= max_valor)
         {
             aux = aux->next;
             aux2 = heade;
-            //printf("estou a apagar %s\n", aux2->country);
             free_node(aux2);
             heade = aux;
         }
@@ -115,7 +111,6 @@ country_list *restricting(country_list *heade, char *string)
             {   //if the week is the same of the week we declared on the comand line, that week will be the unique week of the respective country
                 if (aux->week_pointer->year == ano && aux->week_pointer->week == mes)
                 {
-                    // printf ("encontrei a semana %s %ld %ld\n", aux->country,aux->week_pointer->year, aux->week_pointer->week); WARNING DEBUG PRINT
 
                     auxweek = aux->week_pointer;
                     auxweek = auxweek->next;
@@ -202,7 +197,6 @@ country_list *restricting(country_list *heade, char *string)
 
         }
 
-      //  printf ("date %ld-%ld ",ano,mes);
     }
     //in case of the respective flag is "dates yyyy-ww yyyy-ww"
     variaveis_lidas = sscanf(string, "dates %ld-%ld %ld-%ld\n", &ano, &mes, &ano2, &mes2);
@@ -245,7 +239,6 @@ country_list *restricting(country_list *heade, char *string)
                 //verify if the week we are reading is between the weeks we pretend
                 if (  minvalue > totalvalueaux || maxvalue < totalvalueaux)
                 {
-                  //  printf ("o totalvalueaux ้ %ld\n", totalvalueaux);
                     auxweek2 = aux->week_pointer;
                     aux->week_pointer = aux->week_pointer->next;
                     auxweek = aux->week_pointer;
@@ -254,7 +247,6 @@ country_list *restricting(country_list *heade, char *string)
                 }
                 else if(minvalue > totalvalueweek || maxvalue < totalvalueweek)
                 {
-                    //printf ("o totalvalueweek ้ %ld\n", totalvalueweek );
                     beforeweek->next = auxweek->next;
                     auxweek2 = auxweek;
                     auxweek = auxweek->next;
@@ -300,22 +292,6 @@ country_list *restricting(country_list *heade, char *string)
 
     }
 
-  /* aux = heade;
-    do
-    {
-        printf ("pais %s \n", aux->country);
-        // escreve a semana
-        auxweek  = aux->week_pointer;
-        do
-        {
-            //printf ("semana %d-%d \n", auxweek->year, auxweek->week);
-            printlist(aux, auxweek);
-            auxweek  = auxweek->next; //saltamos para a proxima semana
-        }
-        while (auxweek != NULL);
-
-        aux  = aux->next;
-    }
-    while (aux != NULL);*/
+ 
 return heade;
 }
