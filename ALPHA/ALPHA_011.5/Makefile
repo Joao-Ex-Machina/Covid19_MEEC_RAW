@@ -1,7 +1,7 @@
 #compiler
 CC = gcc
-#compile flags
-CFLAGS  = -Wall -std=c11 -O3 -ggdb3
+#compile flags (in the valgrind debugging stage the flag -ggdb3 was also being used
+CFLAGS  = -Wall -std=c11 -O3
 #executable
 default: covid19
 #Linking
@@ -32,6 +32,6 @@ Help_ErrorCodes.o: Help_ErrorCodes.c covid19.h
 Freemodules.o: Freemodules.c covid19.h
 	$(CC) $(CFLAGS) -c Freemodules.c
 
-#remove object files and executable from directory before forcing recompilation
+#remove object files and emac backup files from directory before forcing recompilation
 clean:
 	$(RM) count *.o *~
