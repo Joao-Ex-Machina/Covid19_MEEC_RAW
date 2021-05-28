@@ -3,7 +3,8 @@
 |                        |All free memory related functions can be found here.                         |
 |                        |                                                                             |
 +------------------------------------------------------------------------------------------------------+
-| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) n�99968, Henrique "Delfas" Delfino            |
+| Authors: Joao Barreiros C. Rodrigues nº99968, Henrique Ramos Delfino nº99957                         |
+|          MEEC-IST                                                                                    |
 | Date: 09 May 2021                                                                                    |
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
