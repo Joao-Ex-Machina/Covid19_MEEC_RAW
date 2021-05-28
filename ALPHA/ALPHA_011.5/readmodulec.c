@@ -8,12 +8,12 @@
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
 
-/*Function Name:create_new_country(
-  Input: 3 chars and one long with the fix information of the country
-  Output:a poiter to the new country
+/*Function Name:create_new_country
+  Input:3 strings(120 chars, 4 chars and 25 chars), 1 long. This input correspond to the fixed data of a country
+  Output: Pointer to the created node
   Date Created: 13 May 2021
   Last Revised: 15 May 2021
-  Definition:create a node for a country
+  Definition:Memory Allocate the size of the node. Store the variables into the node. Return pointer to the node 
 */
 country_list *create_new_country(char name[120], char country_code[4], char continent[25],long population)
 {
@@ -22,20 +22,20 @@ country_list *create_new_country(char name[120], char country_code[4], char cont
     strcpy(new_country->country_code, country_code);
     strcpy(new_country->continent, continent);
     new_country->population = population;
-    new_country->next = NULL;
-    new_country->week_pointer = NULL;
+    new_country->next = NULL; //fail-safe
+    new_country->week_pointer = NULL; //fail-safe
 
     return new_country;
 
 }
 /*Function Name:complete_week
-  Input: two chars, two longs and two ints with information related to the week and a pointer 
-  Output: a pointer to the week completed
+  Input:15 chars,4 longs, 1 double (Variable data refering to one LINE) and a pointer to the week to be completed
+  Output:Pointer to the completed week node
   Date Created: 15 May 2021
   Last Revised: 18 May 2021
-  Definition:complete the information of the week
+  Definition:Called after create_new_week. Complete the week node with the data refering to the line that was not used in create_new_week
 */
-week_list *complete_week(char indicator[15], long weekly_count,int year,int week,float rate_14_day,long cumulative_count, week_list *auxweek)
+week_list *complete_week(char indicator[15], long weekly_count,long year,long week,double rate_14_day,long cumulative_count, week_list *auxweek)
 {
     week_list *pog_week = auxweek;
     if (strcmp(indicator,"cases") == 0)
@@ -60,13 +60,13 @@ week_list *complete_week(char indicator[15], long weekly_count,int year,int week
     return pog_week;
 }
 /*Function Name:create_new_week
-  Input: two chars, two longs and two ints with information related to the week
-  Output: a pointer to the new week
+  Input:String of 15 chars,4 longs, 1 double (Variable data refering to one LINE)
+  Output:Pointer to the created week node
   Date Created: 13 May 2021
   Last Revised: 15 May 2021
-  Definition:create a node for a new week
+  Definition:Memory Allocate the size of the node. Store the variables into the node. Return pointer to the node 
 */
-week_list *create_new_week(char indicator[15], long weekly_count,int year,int week,float rate_14_day,long cumulative_count)
+week_list *create_new_week(char indicator[15], long weekly_count,long year,long week,double rate_14_day,long cumulative_count)
 {
     week_list *new_week = (week_list*)malloc(sizeof(week_list));
     if (strcmp(indicator,"cases") == 0)
@@ -108,6 +108,7 @@ week_list *create_new_week(char indicator[15], long weekly_count,int year,int we
 void le_valor (char *linha,char *name,char *country_code,char *continent,long *population,char *indicator,long *weekly_count,long *year,long *week,double *rate_14_day,long *cumulative_count){
 
     char valor[500] = "";
+    // printf ("Vamos interpretar a string: %s comp: %d\n", linha, strlen(linha));
     int i= 0;
     int posicao = 1;
     while (i <= strlen(linha))
@@ -115,7 +116,7 @@ void le_valor (char *linha,char *name,char *country_code,char *continent,long *p
 
         if (linha[i] == ',' || i == strlen(linha)) //string separation and value saving based on separator comma
         {
-
+            // printf ("\n p%d:%s \n",posicao,valor);
 
             switch (posicao)
             {
@@ -139,12 +140,15 @@ void le_valor (char *linha,char *name,char *country_code,char *continent,long *p
                 break;
             case 7:
                 sscanf(valor,"%ld-%ld", *&year, *&week);
+                // printf ("%ld %ld", year, week);
                 break;
             case 8:
                 sscanf(valor,"%lf", *&rate_14_day);
+                //printf("%lf",rate_14_day );
                 break;
             case 9:
                 sscanf(valor, "%ld", *&cumulative_count);
+                // printf("%ld",cumulative_count);
                 break;
             }
             posicao++;
@@ -152,12 +156,14 @@ void le_valor (char *linha,char *name,char *country_code,char *continent,long *p
         }
         else
         {
+            //guardamos caracter a caracter na variavel valor
             strncat (valor, &linha[i],1);
+            //printf ("%c", s[i]);
         }
 
         i++;
     }
-    if (posicao != 10) //fail-safe conditions. Call help
+    if (posicao != 10) //fail-safe conditionsin case there is a missing collumn or comma. Call help
     {
         if (posicao < 10)
             help(2, Missing_Data_On_File);
@@ -189,7 +195,7 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
     fgets(string,400,fp);
     while (strcmp(continent,chosen_continent) != 0 && fgets(string,400,fp) != NULL)
     {
-        name[0] = '\0'; //reset
+        name[0] = '\0'; //reset (198-203). Fail-safe
         country_code[0] = '\0';
         continent[0] = '\0';
         indicator[0] = '\0';
@@ -211,6 +217,8 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
         header = create_new_country(name, country_code, continent, population);
         header->week_pointer = create_new_week(indicator, weekly_count, year, week, rate_14_day,cumulative_count);
         auxweek = header->week_pointer;
+        //  printf("estou a criar o primeiro node");
+        //printlist(header, auxweek);
         aux = header;
         aux2 = header;
     }
@@ -233,20 +241,25 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
             {
                 if (strcmp(aux2->country,name) == 0)
                 {
+                    //  printf("encontrei o pais %s %s\n",aux2->country, name);
                     auxweek2 = aux2->week_pointer;
+                    // printf("%ld %ld    %ld %ld\n", year, week, auxweek2->year, auxweek2->week);
                     while(auxweek2->year != year || auxweek2->week != week) //verify if the week is different
                     {
                         if (auxweek2->next == NULL)
                         {
                             break;
                         }
+                        //printf("tou a acabar %ld %ld\n ", auxweek2->year, auxweek2->week);
                         auxweek2 = auxweek2->next;
-
+                        // printf (" semana - %ld %ld \n", auxweek2->year, auxweek2->week);
 
                     }
+                    //printf("estamos na semana %ld %ld e no pais %s", auxweek2->year, auxweek2->week, aux2->country);
                     if(auxweek2->year == year && auxweek2->week == week)
                     {
                         auxweek = auxweek2;
+                        //  printf("estou a completar a semana \na");
                         auxweek = complete_week(indicator, weekly_count, year, week, rate_14_day,cumulative_count, auxweek);
                         break;
                     }
@@ -255,6 +268,8 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
                         auxweek = auxweek2;
                         auxweek->next = create_new_week(indicator, weekly_count, year, week, rate_14_day,cumulative_count);
                         auxweek = auxweek->next;
+                        // printf ("criar nova semana %ld %ld", auxweek->year, auxweek2->year);
+                        //  printf("estou a criar uma semana nova %ld %ld", year, week);
                         break;
                     }
 
@@ -266,6 +281,7 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
             if (strcmp(aux->country,name) != 0 && aux->next == NULL)
             {
 
+                // printf("estou a criar um novo pais %s %s\n ", aux->country, name);
                 aux->next = create_new_country(name, country_code, continent, population);
                 aux = aux->next;
                 aux2 = aux;
@@ -274,13 +290,28 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
                 aux->week_pointer = auxweek;
 
             }
-
+            // printf( "aux %s e aux2 %s\n",aux->country, aux2->country);
 
 
         }
     }
 
+// primeira posicao
 
+    /*aux = header;
+     //função para o teste
+     do {
+      printf ("pais %s \n", aux->country);
+         // escreve a semana
+         auxweek  = aux->week_pointer;
+         do {
+             //printf ("semana %d-%d \n", auxweek->year, auxweek->week);
+             printlist(aux, auxweek);
+             auxweek  = auxweek->next; //saltamos para a proxima semana
+             } while (auxweek != NULL);
+
+      aux  = aux->next;
+     } while (aux != NULL);*/
     fclose(fp);
     return header;
 }
@@ -289,7 +320,8 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
   Output: pointer to a struct of type week_list
   Date Created: 22 May 2021
   Last Revised: 23 May 2021
-  Definition: Used during the reading of a .dat File in order to create a new week node with the desired data. It is a simpler version of the create_new_week function
+  Definition: Used during the reading of a .dat File in order to create a new week node with the desired data. It is a simpler version of the create_new_week function.
+  Start with memory allocation of the node. Load variable data to the node.Since it is refering to .dat  file the node data can be loaded all at once
  */
 week_list *create_new_weekDAT(long death_Weekly_count,long death_cumulative_count,long infected_Weekly_count,long infected_cumulative_count,long year,long week,double death_rate_14_day,double infected_rate_14_day)
 {
