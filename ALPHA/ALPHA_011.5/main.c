@@ -3,7 +3,8 @@
 |                        |Directives can be found here:                                                |
 |                        |                                                                             |
 +------------------------------------------------------------------------------------------------------+
-| Authors: Joao Barreiros C. Rodrigues n∫99968, Henrique Ramos Delfino            |
+| Authors: Joao Barreiros C. Rodrigues n¬∫99968, Henrique Ramos Delfino n¬∫99957                         |
+|          MEEC-IST                                                                                    |
 | Date: 09 May 2021                                                                                    |
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
@@ -18,7 +19,10 @@ int main(int argc, char *argv[]){
     {
         switch (opt)
         {
-        case 'i': // opÁ„o com argumentos obrigatÛrios
+         case 'h':
+          help(User_Called_Help, '0');
+          break;
+         case 'i': // op√ß√£o com argumentos obrigat√≥rios
             if (optarg == NULL)
                 help(Argument_Error, Missing_Argument);
             iflag = TRUE;
@@ -28,7 +32,7 @@ int main(int argc, char *argv[]){
                 InputDat_flag=TRUE;
             In_filename = optarg;
         break;
-        case 'o':
+         case 'o':
             if (optarg == NULL)
                 help(Argument_Error, Missing_Argument);
             oflag = TRUE;
@@ -38,13 +42,13 @@ int main(int argc, char *argv[]){
                 OutputDat_flag=TRUE;
             Out_filename  = optarg;
         break;
-        case 'L':
+         case 'L':
             if (optarg == NULL)
                 help(Argument_Error, Missing_Argument);
             Lflag = TRUE;
             continent = optarg;
         break;
-        case 'S':
+         case 'S':
             if (optarg == NULL)
                 help(Argument_Error, Missing_Argument);
             Sflag = TRUE;
@@ -119,7 +123,7 @@ if(iflag==FALSE || oflag==FALSE)
     help(Argument_Error, Missing_Argument);
 
 
-// header = (country_list *)malloc(1*(sizeof(country_list)));  MALLOC CUJA NECESSIDADE TEM QUE SER VERIFICADA!!-> Provavelmente n„o È preciso!
+// header = (country_list *)malloc(1*(sizeof(country_list)));  MALLOC CUJA NECESSIDADE TEM QUE SER VERIFICADA!!-> Provavelmente n√£o √© preciso!
 if (InputDat_flag==FALSE)
 header = readfile(In_filename, header, continent);
 if (InputDat_flag==TRUE)
