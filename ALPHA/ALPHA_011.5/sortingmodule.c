@@ -3,7 +3,8 @@
 |                        |                                                                             |
 |                        |                                                                             |
 +------------------------------------------------------------------------------------------------------+
-| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) n�99968, Henrique "Delfas" Delfino            |
+| Authors: Joao Barreiros C. Rodrigues nº99968, Henrique Ramos Delfino nº99957                         |
+|          MEEC-IST                                                                                    |
 | Date: 19 May 2021                                                                                    |
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
@@ -100,7 +101,7 @@ country_list *population_sorter(country_list *header){
   Input: pointer to a struct of type country_list, in this case the header of the list, 4-char string, 2 longs
   Output: Header to Sorted struct "right"
   Date Created: 19 May 2021
-  Last Revised: 20 May 2021
+  Last Revised: 21 May 2021
   Definition: Bubble sort based function based on the value of the a variable long (either the infected or death weekly counts). Start the function searching for the node with the desired year-week pair
 */
 country_list *CumulativeValue_sorter(country_list *header, char indicator[4] , long aux_year, long aux_week){
