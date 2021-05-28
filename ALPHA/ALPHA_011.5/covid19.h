@@ -37,7 +37,7 @@
 #define Cannot_Reach_File '0'
 #define HELP_MESSAGE "USER CALLED HELP\n VALID INPUTS:\n -i [filename.extension]: Opens filename.extension for reading\n -o [filename.extension]: Writes output data into [filename.extension]\n -L[all/ continent_name]: Read file according to argument. Set by definition to all \n -D[inf/dea/racioinf/raciodea]:Selects data according to the given argument\n -P[min n /max n /date yyyy-ww/dates yyyy-ww yyyy-ww]: Restrict data according to inserted arguments\n -S[alfa/pop/inf yyyy-ww/ dea yyyy-ww]: sort output data according to inserted argument. Set by definition to alfa\n NOTE: Remenber that inserting other terminal arguments other than -o in case of -i[filename.dat] result in argument overflow \n  since the goal of the using the input as a .dat is only importing data not modifiying it"
 //GetOpt defines
-#define OPTION_LIST "i:o:L:D:S:P:h:"
+#define OPTION_LIST "i:o:L:D:S:P:h"
 
 // Struct definitions
 typedef struct country_list{
