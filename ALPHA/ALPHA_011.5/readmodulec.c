@@ -3,17 +3,17 @@
 |                        |                                                                             |
 |                        |                                                                             |
 +------------------------------------------------------------------------------------------------------+
-| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) nº99968, Henrique "Delfas" Delfino            |
+| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) nÂº99968, Henrique "Delfas" Delfino            |
 | Date: 09 May 2021                                                                                    |
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
 
-/*Function Name:
-  Input:
-  Output:
+/*Function Name:create_new_country(
+  Input: 3 chars and one long with the fix information of the country
+  Output:a poiter to the new country
   Date Created: 13 May 2021
   Last Revised: 15 May 2021
-  Definition:
+  Definition:create a node for a country
 */
 country_list *create_new_country(char name[120], char country_code[4], char continent[25],long population)
 {
@@ -28,12 +28,12 @@ country_list *create_new_country(char name[120], char country_code[4], char cont
     return new_country;
 
 }
-/*Function Name:
-  Input:
-  Output:
+/*Function Name:complete_week
+  Input: two chars, two longs and two ints with information related to the week and a pointer 
+  Output: a pointer to the week completed
   Date Created: 15 May 2021
   Last Revised: 18 May 2021
-  Definition:
+  Definition:complete the information of the week
 */
 week_list *complete_week(char indicator[15], long weekly_count,int year,int week,float rate_14_day,long cumulative_count, week_list *auxweek)
 {
@@ -59,12 +59,12 @@ week_list *complete_week(char indicator[15], long weekly_count,int year,int week
     }
     return pog_week;
 }
-/*Function Name:
-  Input:
-  Output:
+/*Function Name:create_new_week
+  Input: two chars, two longs and two ints with information related to the week
+  Output: a pointer to the new week
   Date Created: 13 May 2021
   Last Revised: 15 May 2021
-  Definition:
+  Definition:create a node for a new week
 */
 week_list *create_new_week(char indicator[15], long weekly_count,int year,int week,float rate_14_day,long cumulative_count)
 {
@@ -108,7 +108,6 @@ week_list *create_new_week(char indicator[15], long weekly_count,int year,int we
 void le_valor (char *linha,char *name,char *country_code,char *continent,long *population,char *indicator,long *weekly_count,long *year,long *week,double *rate_14_day,long *cumulative_count){
 
     char valor[500] = "";
-    // printf ("Vamos interpretar a string: %s comp: %d\n", linha, strlen(linha));
     int i= 0;
     int posicao = 1;
     while (i <= strlen(linha))
@@ -116,7 +115,7 @@ void le_valor (char *linha,char *name,char *country_code,char *continent,long *p
 
         if (linha[i] == ',' || i == strlen(linha)) //string separation and value saving based on separator comma
         {
-            // printf ("\n p%d:%s \n",posicao,valor);
+
 
             switch (posicao)
             {
@@ -140,15 +139,12 @@ void le_valor (char *linha,char *name,char *country_code,char *continent,long *p
                 break;
             case 7:
                 sscanf(valor,"%ld-%ld", *&year, *&week);
-                // printf ("%ld %ld", year, week);
                 break;
             case 8:
                 sscanf(valor,"%lf", *&rate_14_day);
-                //printf("%lf",rate_14_day );
                 break;
             case 9:
                 sscanf(valor, "%ld", *&cumulative_count);
-                // printf("%ld",cumulative_count);
                 break;
             }
             posicao++;
@@ -156,9 +152,7 @@ void le_valor (char *linha,char *name,char *country_code,char *continent,long *p
         }
         else
         {
-            //guardamos caracter a caracter na variavel valor
             strncat (valor, &linha[i],1);
-            //printf ("%c", s[i]);
         }
 
         i++;
@@ -217,8 +211,6 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
         header = create_new_country(name, country_code, continent, population);
         header->week_pointer = create_new_week(indicator, weekly_count, year, week, rate_14_day,cumulative_count);
         auxweek = header->week_pointer;
-        //  printf("estou a criar o primeiro node");
-        //printlist(header, auxweek);
         aux = header;
         aux2 = header;
     }
@@ -241,25 +233,20 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
             {
                 if (strcmp(aux2->country,name) == 0)
                 {
-                    //  printf("encontrei o pais %s %s\n",aux2->country, name);
                     auxweek2 = aux2->week_pointer;
-                    // printf("%ld %ld    %ld %ld\n", year, week, auxweek2->year, auxweek2->week);
                     while(auxweek2->year != year || auxweek2->week != week) //verify if the week is different
                     {
                         if (auxweek2->next == NULL)
                         {
                             break;
                         }
-                        //printf("tou a acabar %ld %ld\n ", auxweek2->year, auxweek2->week);
                         auxweek2 = auxweek2->next;
-                        // printf (" semana - %ld %ld \n", auxweek2->year, auxweek2->week);
+
 
                     }
-                    //printf("estamos na semana %ld %ld e no pais %s", auxweek2->year, auxweek2->week, aux2->country);
                     if(auxweek2->year == year && auxweek2->week == week)
                     {
                         auxweek = auxweek2;
-                        //  printf("estou a completar a semana \na");
                         auxweek = complete_week(indicator, weekly_count, year, week, rate_14_day,cumulative_count, auxweek);
                         break;
                     }
@@ -268,8 +255,6 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
                         auxweek = auxweek2;
                         auxweek->next = create_new_week(indicator, weekly_count, year, week, rate_14_day,cumulative_count);
                         auxweek = auxweek->next;
-                        // printf ("criar nova semana %ld %ld", auxweek->year, auxweek2->year);
-                        //  printf("estou a criar uma semana nova %ld %ld", year, week);
                         break;
                     }
 
@@ -281,7 +266,6 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
             if (strcmp(aux->country,name) != 0 && aux->next == NULL)
             {
 
-                // printf("estou a criar um novo pais %s %s\n ", aux->country, name);
                 aux->next = create_new_country(name, country_code, continent, population);
                 aux = aux->next;
                 aux2 = aux;
@@ -290,28 +274,13 @@ country_list* readfile(char* _filename,country_list* heade,char *chosen_continen
                 aux->week_pointer = auxweek;
 
             }
-            // printf( "aux %s e aux2 %s\n",aux->country, aux2->country);
+
 
 
         }
     }
 
-// primeira posicao
 
-    /*aux = header;
-     //função para o teste
-     do {
-      printf ("pais %s \n", aux->country);
-         // escreve a semana
-         auxweek  = aux->week_pointer;
-         do {
-             //printf ("semana %d-%d \n", auxweek->year, auxweek->week);
-             printlist(aux, auxweek);
-             auxweek  = auxweek->next; //saltamos para a proxima semana
-             } while (auxweek != NULL);
-
-      aux  = aux->next;
-     } while (aux != NULL);*/
     fclose(fp);
     return header;
 }
