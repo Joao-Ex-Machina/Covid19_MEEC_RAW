@@ -60,7 +60,7 @@ struct week_list *next;
 country_list* readfile(char* _filename,country_list* heade,char *chosen_continent);
 void printlist (country_list *head, week_list *auxweek);
 country_list *create_new_country(char name[120], char country_code[4], char continent[25],long population);
-week_list *create_new_week(char indicator[15], long weekly_count,int year,int week,float rate_14_day,long cumulative_count);
+week_list *create_new_week(char indicator[15], long weekly_count,long year,long week,double rate_14_day,long cumulative_count);
 void le_valor (char *linha,char *name,char *country_code,char *continent,long *population,char *indicator,long *weekly_count,long *year,long *week,double *rate_14_day,long *cumulative_count);
 country_list* readDATfile(char* _filename,country_list* heade);
 //Help and ErrorCodes Module
