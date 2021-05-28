@@ -3,14 +3,15 @@
 |                        |All Output files related functions can be found in this module               |
 |                        |                                                                             |
 +------------------------------------------------------------------------------------------------------+
-| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) n�99968, Henrique "Delfas" Delfino            |
-| Date: 19 May 2021                                                                                    |
+| Authors: Joao Barreiros C. Rodrigues nº99968, Henrique Ramos Delfino nº99957                         |
+|          MEEC-IST                                                                                    |
+| Date: 17 May 2021                                                                                    |
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
 /*Function Name:printnode_tofile
   Input: Two pointers to nodes of type country_list and week_list, pointer to File, integer Indicator_To_print(print cases or deaths), integer Dflag (selection flag), string selection pointer
   Output:No return. Strings printed to file
-  Date Created: 19 May 2021
+  Date Created: 17 May 2021
   Last Revised: 20 May 2021
   Definition:Used to print a node to a .csv or .txt file. Depending on the restriction type the lines related to "cases" or "deaths" can be ommited
 */
@@ -51,7 +52,7 @@ void printnode_toDATfile_test (country_list *node, week_list *auxweek,FILE *fp){
 /*Function Name:printlist_tofile
   Input: Pointer to the header of the list (node), 2 pointers to the first char of a string (file name and type of selection), 2 integers DotDAt_flag (.dat flag) and DFlag (selection flag)
   Output:No return. File written
-  Date Created: 20 May 2021
+  Date Created: 17 May 2021
   Last Revised: 21 May 2021
   Definition:Main function to print, depending on the DotDat_flag calls one or another function to print a node to file
 */
