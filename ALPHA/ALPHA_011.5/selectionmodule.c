@@ -3,7 +3,7 @@
 |                        |                                                                             |
 |                        |                                                                             |
 +------------------------------------------------------------------------------------------------------+
-| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) nº99968, Henrique "Delfas" Delfino            |
+| Authors: Joao Barreiros C. Rodrigues (Joao-Ex-Machina) nÂº99968, Henrique "Delfas" Delfino            |
 | Date: 19 May 2021                                                                                    |
 +-----------------------------------------------------------------------------------------------------*/
 #include "covid19.h"
@@ -12,26 +12,28 @@
   Output:void function
   Date Created: 19 May 2021
   Last Revised: 23 May 2021
-  Definition:F
+  Definition:selects the data specified on the command line
 */
 country_list *dataselection(country_list *heade,char data_selection[20]){
 
     country_list  *aux = NULL;
     week_list *auxweek = NULL, *auxweek2 = NULL;
     aux = heade;
+      //if the data selection is inf
     if (strcmp(data_selection,"inf") == 0)
     {
+       //while cicle to check all countries
         while (aux != NULL)
         {
-            // printf("sim");
-            // printf("pais novo %s\n", aux->country);
+
             auxweek = aux->week_pointer;
             auxweek2 = auxweek->next;
+           //checks for each country if the infected weekly count is bigger than the next
             while (auxweek->next != NULL)
             {
                 if (auxweek->infected_Weekly_count > auxweek2->infected_Weekly_count)//see which of the weeks has the highest number of infected
                 {
-                    //  printf ("o axweek e maior que o auxweek2 %ld %ld\n",auxweek->infected_Weekly_count, auxweek2->infected_Weekly_count);
+             
                     auxweek->next = auxweek2->next;
                     auxweek2->next = NULL;
                     free(auxweek2);
@@ -40,7 +42,7 @@ country_list *dataselection(country_list *heade,char data_selection[20]){
                 }
                 else if (auxweek->infected_Weekly_count < auxweek2->infected_Weekly_count)
                 {
-                    //   printf (" o axweek e menor que o auxweek2 %ld %ld\n",auxweek->infected_Weekly_count, auxweek2->infected_Weekly_count);
+
                     auxweek->next = NULL;
                     aux->week_pointer = auxweek2;
                     free(auxweek);
@@ -57,6 +59,7 @@ country_list *dataselection(country_list *heade,char data_selection[20]){
                 }
 
             }
+           //put all data related with deaths in 0 because we only want data related with cases
             auxweek->death_rate_14_day = 0;
             auxweek->death_Weekly_count = 0;
             auxweek->death_cumulative_count = 0;
@@ -65,12 +68,15 @@ country_list *dataselection(country_list *heade,char data_selection[20]){
 
 
     }
+  //if the data selection is dea
     else if (strcmp(data_selection,"dea") == 0)
     {
+      //while cicle to check all countries
         while (aux != NULL)
         {
             auxweek = aux->week_pointer;
             auxweek2 = auxweek->next;
+           //checks for each country if the death weekly count is bigger than the next
             while (auxweek->next != NULL)
             {
                 if (auxweek->death_Weekly_count > auxweek2->death_Weekly_count)//see which of the weeks has the highest number of infected
@@ -99,6 +105,7 @@ country_list *dataselection(country_list *heade,char data_selection[20]){
                 }
 
             }
+          //put all data related with causes in 0 because we only want data related with deaths
             auxweek->infected_rate_14_day = 0;
             auxweek->infected_Weekly_count = 0;
             auxweek->infected_cumulative_count = 0;
@@ -108,12 +115,15 @@ country_list *dataselection(country_list *heade,char data_selection[20]){
 
 
     }
+         //if the data selection is racioinf
     else if (strcmp(data_selection,"racioinf") == 0)
     {
+      //checks all countries
         while (aux != NULL)
         {
             auxweek = aux->week_pointer;
             auxweek2 = auxweek->next;
+          //checks for each country if the infected week racio is bigger than the next
             while (auxweek->next != NULL)
             {
                 if (auxweek->infected_rate_14_day > auxweek2->infected_rate_14_day)//see which of the weeks has the highest number of infected
@@ -142,6 +152,7 @@ country_list *dataselection(country_list *heade,char data_selection[20]){
                 }
 
             }
+             //put all data related with deaths in 0 because we only want data related with cases
             auxweek->death_rate_14_day = 0;
             auxweek->death_Weekly_count = 0;
             auxweek->death_cumulative_count = 0;
@@ -151,12 +162,15 @@ country_list *dataselection(country_list *heade,char data_selection[20]){
 
 
     }
+  //if the data selection is raciodea
     else if (strcmp(data_selection,"raciodea") == 0)
     {
+       //while cicle to check all countries
         while (aux != NULL)
         {
             auxweek = aux->week_pointer;
             auxweek2 = auxweek->next;
+          //checks for each country if the racio death is bigger than the next
             while (auxweek->next != NULL)
             {
                 if (auxweek->death_rate_14_day > auxweek2->death_rate_14_day)//see which of the weeks has the highest number of infected
@@ -184,6 +198,7 @@ country_list *dataselection(country_list *heade,char data_selection[20]){
                     auxweek2 = auxweek->next;
                 }
             }
+          //put all data related with causes in 0 because we only want data related with deaths
             auxweek->infected_rate_14_day = 0;
             auxweek->infected_Weekly_count = 0;
             auxweek->infected_cumulative_count = 0;
